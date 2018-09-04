@@ -1,0 +1,41 @@
+{% extends "Base.html" %}
+
+{% load static %}
+
+{% block Body %}
+
+
+<p align="left" >
+
+
+    <form action="{%  url 'sumdisp' %}" method="get">
+
+    <p  style = "padding-top:10px; padding-bottom: 10px; padding-left: 50px; ">
+    <input type="checkbox" id="checkbox" name="checkbox" value="TextRank{{usertext}}">
+    <label for="checkbox" ><font size="5">TextRank</font></label>
+    <label style = "padding-right: 100px;"></label>
+    <input type="checkbox" id="checkbox" name="checkbox" value="LSA{{usertext}}">
+    <label for="checkbox" ><font size="5">LSA</font></label>
+        <label style = "padding-right: 100px;"></label>
+    <input type="checkbox" id="checkbox" name="checkbox" value="Gensim{{usertext}}">
+    <label for="checkbox" ><font size="5">Gensim</font></label>
+        <label style = "padding-right: 100px;"></label>
+    </p>
+
+
+
+
+    <p align ="center" style = "padding-top:10px; padding-bottom: 10px; color:black;">
+    <textarea id="textbox" type="text" name="textbox" value="" rows="10" cols="135" placeholder="Paste your desired text here...Choose a summarization Method (only one at a time) to view a summary 20% the length of your input text...Press Submit
+    " style="font-size:11pt;"></textarea>
+    <input type="submit" value="Submit">
+    </form>
+</p>
+
+
+
+
+
+
+
+{% endblock %}

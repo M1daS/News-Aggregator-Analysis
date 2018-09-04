@@ -1,0 +1,204 @@
+{% load static %}
+<!doctype html>
+<html lang=''>
+
+
+<head>
+
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+   <!-- BOOTSTRAP -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+      <!--    W3 school stylesheets -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <!--    IMPORT CSS FILES -->
+    <!--    IMPORT JAVASCRIPT FILES -->
+   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+   <script type="text/javascript" src="{% static 'script.js'%}"></script>
+
+<!-- Tree -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+
+   <title>Sigma</title>
+
+
+</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+
+   <link rel="stylesheet" href="{% static 'Base.css' %}"/>
+<!-- The expand accordian script below does not work if moved to script.js file -->
+<script type="text/javascript">
+
+
+// w3 accordian expansion
+function w3_expand_accordian(id) {
+    var x = document.getElementById(id);
+
+    if (x.className.indexOf("w3-show") == -1) {
+        // x.style.width = "100%";
+        // x.style.position = "absolute";
+        // x.style.left = '0px';
+
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+
+}
+
+function summary_ajax(articlelink){
+        //The article link is passed to the view using GET under the dictionary key of newsitem
+        $.ajax({type: "GET", url: '{% url "get_summary" %}', data: {'newsitem': articlelink}, dataType: 'json', 
+        success: function (result) {
+          var summary = JSON.stringify(result['summarytext']);
+          var thesissentence = "<strong><i>"+ JSON.stringify(result['thesis']) +"</i></strong>";
+          document.getElementById(articlelink +' thesisArea').innerHTML = thesissentence;
+          document.getElementById(articlelink).innerHTML = summary;
+
+
+
+
+          // var similararticles = JSON.stringify(result['similarArticles']);
+          // var similarstring = articlelink.concat(' similarArticle');
+          // var similarstringRight = articlelink.concat(' similarArticleRight');
+          // var results = similararticles.split(",\"");
+
+          // var anchorlist = JSON.stringify(result['anchorlist']);
+          // var anchorresults = anchorlist.split(",\"");
+
+          // for (i = 0; i < 2; i++) {
+          //   var div = document.getElementById(similarstring)
+          //   div.className = 'similarStoryDiv';
+          //   newlink = document.createElement('a');
+          //   newlink.className = 'similarStoryLink'
+          //   results[i] = results[i].replace("\"","")
+          //   results[i] = results[i].replace("[","")
+          //   results[i] = results[i].replace("\"","")
+          //   results[i] = results[i].replace("]","")
+
+          //   anchorresults[i] = anchorresults[i].replace("\"","")
+          //   anchorresults[i] = anchorresults[i].replace("[","")
+          //   anchorresults[i] = anchorresults[i].replace("\"","")
+          //   anchorresults[i] = anchorresults[i].replace("]","")
+          //   var anchor = '#'.concat(anchorresults[i])
+          //   newlink.setAttribute('href', anchor);
+
+
+          //   newlink.innerHTML = results[i] + "<br><br>"
+          //   div.appendChild(newlink);
+          // }
+
+          // for (i = 2; i < results.length; i++) { 
+          //   var div = document.getElementById(similarstringRight)
+          //   div.className = 'similarStoryDiv';
+          //   newlink = document.createElement('a');
+          //   newlink.className = 'similarStoryLink'
+          //   results[i] = results[i].replace("\"","")
+          //   results[i] = results[i].replace("[","")
+          //   results[i] = results[i].replace("\"","")
+          //   results[i] = results[i].replace("]","")
+
+          //   anchorresults[i] = anchorresults[i].replace("\"","")
+          //   anchorresults[i] = anchorresults[i].replace("[","")
+          //   anchorresults[i] = anchorresults[i].replace("\"","")
+          //   anchorresults[i] = anchorresults[i].replace("]","")
+          //   var anchor = '#'.concat(anchorresults[i])
+          //   newlink.setAttribute('href', anchor);
+
+
+          //   newlink.innerHTML = results[i] + "<br><br>"
+          //   div.appendChild(newlink);
+          // }
+          
+         
+        }
+      });
+  }
+
+
+// function organize_articles(source){
+//         //The data dictionary is passed to the view using GET under the dictionary key of source
+//         $.ajax({type: "GET", url: '{% url "organize_articles" %}', data: {'source': source}, dataType: 'json', 
+//         success: function (result) {   
+//             var organized = JSON.stringify(result['organized_dict']);
+//         }
+//       });
+//   }
+
+
+</script>
+
+
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href='{% url "sigma_homepage" %}'>Sigma</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href='{% url "sigma_homepage" %}'>Home</a></li>
+      <li><a href='{% url "news_homepage" %}'>News</a></li>
+      <li><a href='{% url "text_homepage" %}'>Text</a></li>
+      <li><a href='{% url "tree" %}'>Tree</a></li>
+      <li><a href='{% url "graphics" %}'>Graphics</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sources
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          {% block NavBarDropDown %}
+          {% endblock %}
+        </ul>
+      </li>
+        {% block NavBar %}
+        {% endblock %}
+
+
+
+      <li style = "position:absolute; right:65px; color:black;">
+        {{user}}
+      </li>
+
+      <li style = "position:absolute; right:60px; bottom:-5px;">
+      <a href = '/Signup/'><img src = "https://cdn0.iconfinder.com/data/icons/thin-users-people/57/thin-198_user_create_add_new-512.png" height="20" width="20" title = 'Sign Up!'></a>
+      </li>
+
+      <li style = "position:absolute; right:120px; bottom:-5px;">
+      <a href = '/Login/'><img src = "http://icons.iconarchive.com/icons/iconsmind/outline/512/Key-icon.png" height="20" width="20" title = 'LogIn!'></a>
+      </li>
+
+      <li style = "position:absolute; right:0px; bottom:-5px;">
+      <a href = '/Logout/'><img src = "https://d30y9cdsu7xlg0.cloudfront.net/png/9668-200.png" height="20" width="20" title = 'LogOut!'></a>
+      </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+	{% block Body %}
+
+
+	{% endblock %}
+
+</body>
+
+
+</html>
